@@ -1,0 +1,29 @@
+.calcetin {
+  width: 200px;
+}
+
+.disabledButton {
+  background-color: red;
+}
+
+.outOfStock {
+  text-decoration: line-through;
+}
+
+.product {
+  display: flex;
+  justify-content: center;
+}
+
+.variant-box {
+  height: 100px;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.variant-container {
+  display: flex;
+  justify-content: center;
+}
