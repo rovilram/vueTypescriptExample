@@ -35,8 +35,10 @@
 </template>
 
 <script lang="ts">
+import { reviewInterface } from '@/App.vue';
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import eventBus from './eventBus';
 @Component
 export default class ProductReview extends Vue {
     name = '';
@@ -46,13 +48,13 @@ export default class ProductReview extends Vue {
     errors: string[] = [];
     onSubmit() {
         if (this.name && this.review && this.rating) {
-            console.log('llego aqui');
-            this.$emit('add-review', {
+            const review: reviewInterface = {
                 name: this.name,
                 review: this.review,
                 rating: this.rating,
                 question: this.question
-            });
+            };
+            eventBus.$emit('add-review', review);
             this.name = '';
             this.review = '';
             this.rating = 0;

@@ -4,9 +4,8 @@
     #app
         .cart
             p Cart({{ cart.length }})
-        product(:premium='true', @add-to-card='increaseCart', @remove-from-card='decreaseCart')
-        ProductReview(@add-review='addReview')
-        ReviewList(:reviews='reviews')
+        product(@add-to-card='increaseCart', @remove-from-card='decreaseCart')
+        ProductTabs(:reviews='reviews', :premium='true', :details='details')
 </template>
 
 <style lang="scss">
@@ -34,16 +33,24 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import eventBus from './components/eventBus';
 import product from './components/product.vue';
-import ProductReview from './components/ProductReview.vue';
-import ReviewList from './components/ReviewList.vue';
+import ProductTabs from './components/ProductTabs.vue';
+
+export interface reviewInterface {
+    name: string;
+    review: string;
+    rating: number;
+    question: string;
+}
 
 @Component({
-    components: { product, ProductReview, ReviewList }
+    components: { product, ProductTabs }
 })
 export default class App extends Vue {
     cart: number[] = [];
-    reviews: string[] = [];
+    reviews: reviewInterface[] = [];
+    details = ['80% cotton', '20% polyester', 'Gender-neutral'];
 
     increaseCart(id: number) {
         this.cart.push(id);
@@ -51,8 +58,12 @@ export default class App extends Vue {
     decreaseCart(id: number) {
         this.cart = this.cart.filter((_, i) => this.cart.findIndex((el) => el === id) != i);
     }
-    addReview(review: string) {
+    /*     addReview(review: string) {
         this.reviews.push(review);
+    } */
+
+    mounted() {
+        eventBus.$on('add-review', (review: reviewInterface) => this.reviews.push(review));
     }
 }
 </script>

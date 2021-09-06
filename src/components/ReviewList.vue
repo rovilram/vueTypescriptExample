@@ -1,6 +1,7 @@
 <template lang="pug">
 .reviews-container
     h2 Reviews
+    div(v-if='!reviews.length') There are no reviews
     ul
         li(v-for='{ name, review, rating, question } in reviews')
             p Nombre: {{ name }}
@@ -10,15 +11,10 @@
 </template>
 
 <script lang="ts">
+import { reviewInterface } from '@/App.vue';
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 
-interface reviewInterface {
-    name: string;
-    review: string;
-    rating: number;
-    question: string;
-}
 @Component
 export default class ReviewList extends Vue {
     @Prop({
@@ -29,3 +25,4 @@ export default class ReviewList extends Vue {
     reviews!: reviewInterface[];
 }
 </script>
+
